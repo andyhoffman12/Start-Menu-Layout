@@ -22,20 +22,23 @@ $tempLayoutXMLFile = $layoutPath + "Layout_temp.xml"
 $availableStartAppsJson = $layoutPath + "AvailableStartApps.json"
 $menuListJson = $layoutPath + "Menu.json"
     
-# Load the valid start Apps list
-try {
-    $availablestartApps = Get-Content -path $availableStartAppsJson | ConvertFrom-Json
-}
-catch {
-    Write-Warning "Unable to load StartApps from $availableStartAppsJson"
-    Write-Error $_
-}
 # Load the menu groups
 try {
     $menuGroups = Get-Content $menuListJson | ConvertFrom-Json
 }
 catch {
     Write-Warning "!!!Unable to load Menu Groups from: $menuListJson"
+    Write-Error $_
+}
+# Load the valid start Apps list
+try {
+    $availablestartApps = Get-Content -path $availableStartAppsJson | ConvertFrom-Json
+    if($menuGroups.excludeApps){
+        $availablestartApps = $availablestartApps | Where-Object -FilterScript { $_.AppID -NotIn $menuGroups.excludeApps.AppID }
+    }
+}
+catch {
+    Write-Warning "Unable to load StartApps from $availableStartAppsJson"
     Write-Error $_
 }
 
@@ -66,6 +69,7 @@ function WriteTileXML ($group) {
     #this looses the order of the apps from menu.json/$group.members
     $confirmedStartApps = $availablestartApps | Where-Object { $_.Name -in $group.members }
 
+    #this restores the Order
     $sortedConfirmedStartApps = @()
     foreach ($member in $group.members) {
         $sortedConfirmedStartApps += $confirmedStartApps | Where-Object { $_.name -eq $member }
@@ -78,7 +82,7 @@ function WriteTileXML ($group) {
 
         $row = [math]::Truncate($index / 3) * 2
         $column = ($index % 3) * 2
-        Write-Output "row: $row   column: $column     $($confirmedApp.Name)"
+        #Write-Output "row: $row   column: $column     $($confirmedApp.Name)"
 
         #Write XML elements and attributes for the tile
         $writer.WriteStartElement("start", $confirmedApp.TileType, "http://schemas.microsoft.com/Start/2014/StartLayout")
@@ -125,7 +129,8 @@ else {
 
 if ($FilesDifferent) {
     Write-Verbose "Start Menu Layout Updated"
-    Copy-Item $tempLayoutXMLFile $layoutXMLFile -verbose -Force
+    ### comment out for testing mode
+    Copy-Item $tempLayoutXMLFile $layoutXMLFile -verbose -Force 
     if (!$?) { throw $error[0].exception }
 }
 else {

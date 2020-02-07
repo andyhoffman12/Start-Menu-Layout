@@ -5,25 +5,24 @@
             "members": [
                 "Log Off",
                 "This PC",
-                "Internet Explorer",
-                "Google Chrome",
-                "Calculator",
+                "Microsoft Edge",
+                "Epicor 10",
+                "Epicor 10 MES",
                 "Word 2013",
                 "Excel 2013",
                 "PowerPoint 2013",
                 "Outlook 2013",
                 "OneNote 2013",
-                "Epicor 10",
-                "Epicor 10 MES",
                 "Skype",
                 "SysAid",
+                "Calculator",
                 "Weather"
             ]
         },
         {
             "name": "DSTI Job Specific",
             "members": [
-                "Notepad",
+                "ShoreTel Communicator",
                 "Remote Desktop Manager",
                 "Visual Studio Code",
                 "Wrike for Windows",
@@ -32,9 +31,14 @@
                 "Epicor 10 MES - TEST",
                 "Epicor 10 TEST",
                 "Amazon Chime",
-                "ShoreTel Communicator",
-                "DWG TrueView 2019 - English",
-                "Edrawings 2018 x64 Edition"
+                "Notepad++"
+            ]
+        }
+    ],
+    "excludeApps" : [
+        {
+            "AppID" : [
+                "Microsoft.MicrosoftEdge_8wekyb3d8bbwe!MicrosoftEdge"
             ]
         }
     ]
