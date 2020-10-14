@@ -1,5 +1,7 @@
 Credit for the original script goes to Kevin Johnston: https://github.com/kmjohnston/PowerShell/tree/master/StartMenuLayout
 
+Still works as of Windows 10 2004
+
 # Start-Menu-Layout
 Windows 10 Dynamic Start Menu Script. This adds custom groups to the Windows 10 start menu and can be updated on the fly for users.
 Lets you define a master list of applications you want to appear on a menu but will build the Layout and exclude missing applications on a pc. Giving you the ability to update applications using your normal tools and Update the menu pinnings as needed for employee ease of use.
